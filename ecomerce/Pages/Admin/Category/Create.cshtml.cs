@@ -16,7 +16,6 @@ namespace ecomerce.Pages.Admin.Category
     {
 
         private CategoryService categoryService = new CategoryService();
-        private readonly IHubContext<SignalHub> _hubContext;
 
 
         public CreateModel(IHubContext<SignalHub> hubContext)
