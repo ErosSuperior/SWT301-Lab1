@@ -11,7 +11,7 @@ namespace ecomerce.Pages.Customer
 
         private OrderService orderService = new OrderService();
         public IList<OrderDetail> OrderDetail { get; set; } = default!;
-        public decimal total = 0;
+        private decimal total = 0;
         public async Task<IActionResult> OnGetAsync()
         {
             var customer = HttpContext.Session.GetString("customer");
