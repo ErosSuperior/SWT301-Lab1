@@ -1,0 +1,67 @@
+﻿@page
+@model ecomerce.Pages.Customer.OrderDetailsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers;
+@addTagHelper *, AuthoringTagHelpers
+@{
+    ViewData["Title"] = "Order Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container my-5">
+    <h1>Order Details</h1>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <strong>Order ID:</strong> @Model.Order.OrderId
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-4">
+                        <strong>Customer Name:</strong> @Model.Order.Customer.FullName <br />
+                        <strong>Order Date:</strong> @Model.Order.OrderDate.Value.ToShortDateString()<br />
+                        <strong>Required Date:</strong> @Model.Order.RequiredDate.Value.ToShortDateString() <br />
+                        <strong>Shipped Date:</strong> @(Model.Order.ShippedDate.HasValue ? Model.Order.ShippedDate.Value.ToShortDateString() : "Not shipped yet") <br />
+                        <strong>Shipping Address:</strong> @Model.Order.ShipAddress <br />
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Product Image</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.OrderDetail)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.Product.ProductName)</td>
+                                        <td><img src="@Html.DisplayFor(modelItem => item.Product.ProductImage)" style="width:60px;height:80px;" class="img-fluid" alt=""></td>
+                                        <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <strong>Total: $@Model.total</strong>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Custom styles (if needed) */
+</style>
+
+<script>
+    // JavaScript code here (if any)
+</script>

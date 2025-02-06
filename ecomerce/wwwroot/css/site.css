@@ -1,0 +1,40 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position  : relative;
+  min-height: 100%;
+}
+
+body {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  /* Remove underline */
+  color          : #007bff;
+  /* Set link color */
+  transition     : color 0.2s ease;
+  /* Add smooth color transition on hover */
+}
+
+a:hover {
+  color: #0056b3;
+  /* Change link color on hover */
+}

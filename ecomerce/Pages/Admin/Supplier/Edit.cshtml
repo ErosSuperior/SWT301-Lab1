@@ -1,0 +1,43 @@
+﻿@page
+@model ecomerce.Pages.Admin.Supplier.EditModel
+
+@{
+    ViewData["Title"] = "Edit Supplier";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1 class="my-4 text-center">Edit Supplier</h1>
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <form class="row g-3" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Supplier.SupplierId" />
+            <div class="col-12">
+                <label asp-for="Supplier.CompanyName" class="control-label"></label>
+                <input asp-for="Supplier.CompanyName" class="form-control" />
+                <span asp-validation-for="Supplier.CompanyName" class="text-danger"></span>
+            </div>
+            <div class="col-12">
+                <label asp-for="Supplier.Address" class="control-label"></label>
+                <input asp-for="Supplier.Address" class="form-control" />
+                <span asp-validation-for="Supplier.Address" class="text-danger"></span>
+            </div>
+            <div class="col-12">
+                <label asp-for="Supplier.Phone" class="control-label"></label>
+                <input asp-for="Supplier.Phone" class="form-control" />
+                <span asp-validation-for="Supplier.Phone" class="text-danger"></span>
+            </div>
+            <div class="col-12">
+            <div class="mb-3" style="color:red">@ViewBag.notice</div>
+            </div>
+            <div class="col-12 d-flex justify-content-evenly">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

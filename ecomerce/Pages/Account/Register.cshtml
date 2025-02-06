@@ -1,0 +1,65 @@
+﻿@page
+@model ecomerce.Pages.Account.RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="mb-4 text-center">Register</h1>
+
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+ <div class="form-group">
+    <label asp-for="Account.UserName" class="control-label">Username</label>
+    <input asp-for="Account.UserName" class="form-control" />
+    <span asp-validation-for="Account.UserName" class="text-danger"></span>
+</div>
+
+                <div class="form-group">
+                    <label asp-for="Account.Password" class="control-label">Password</label>
+                    <input asp-for="Account.Password" class="form-control" />
+                    <span asp-validation-for="Account.Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Account.FullName" class="control-label">Full Name</label>
+                    <input asp-for="Account.FullName" class="form-control" />
+                    <span asp-validation-for="Account.FullName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Account.Address" class="control-label">Address</label>
+                    <input asp-for="Account.Address" class="form-control" />
+                    <span asp-validation-for="Account.Address" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Account.Phone" class="control-label">Phone</label>
+                    <input asp-for="Account.Phone" class="form-control" />
+                    <span asp-validation-for="Account.Phone" class="text-danger"></span>
+                </div>
+
+                <div class="form-group form-check">
+                    <input class="form-check-input" asp-for="Account.Type" />
+                    <label class="form-check-label" for="Account.Type">@Html.DisplayNameFor(model => model.Account.Type)</label>
+                </div>
+
+                <div class="form-group text-center">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+            <div class="text-center mt-2">
+              Already have an account? <a asp-area="" asp-page="/Account/Login">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

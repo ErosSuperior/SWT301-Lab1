@@ -1,0 +1,58 @@
+﻿@page
+@model ecomerce.Pages.Customer.CartModel
+@{
+    ViewData["Title"] = "Cart";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Cart</h1>
+
+@if (Model.OrderDetail.Count > 0)
+{
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Product Image</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderDetail)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Product.ProductName)</td>
+                            <td><img src="@Html.DisplayFor(modelItem => item.Product.ProductImage)" style="width:60px;height:80px;"></td>
+                            <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                            <td><a asp-page="./DeleteProduct" asp-route-id="@item.ProductId" class="btn btn-danger btn-sm">Delete</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total</h5>
+                    <h3 class="card-text">$@Model.total</h3>
+                    <form method="post">
+                        <div class="mb-3">
+                            <label for="requireDate" class="form-label">Required Date:</label>
+                            <input type="date" required name="requireDate" class="form-control" min='@DateTime.Now.ToString("yyyy-MM-dd")'/>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Place Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h3>Your cart is empty.</h3>
+}

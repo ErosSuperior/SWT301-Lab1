@@ -1,0 +1,60 @@
+﻿@page
+@model ecomerce.Pages.Account.LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <h1 class="text-center">Login</h1>
+
+            <form method="post">
+                <div class="mb-3">
+                    <label for="username" class="form-label fs-6">Username</label>
+                    <input name="Username" type="text" class="form-control form-control-sm" id="username" aria-describedby="usernameHelp">
+                    <div id="usernameHelp" class="form-text">We'll never share your email/username with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label fs-6">Password</label>
+                    <input name="Password" type="password" class="form-control form-control-sm" id="password">
+                </div>
+
+                <div class="mb-3" style="display:none">
+                    <input name="validate" value="@Model.validate" type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+
+            <div class="text-center mt-3 fs-6" style="color:red">@ViewBag.notice</div>
+            <div class="text-center mt-2">
+                Don't have an account? <a asp-area="" asp-page="/Account/Register">Register</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function displayStringAsImage(str) {
+        const width = 150;
+        const height = 50;
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'aqua';
+        ctx.fillRect(0, 0, width, height);
+        ctx.font = '16px Arial';
+        ctx.fillStyle = '#000';
+        ctx.fillText(str, 10, 30);
+        const dataUrl = canvas.toDataURL();
+        const img = document.createElement('img');
+        img.src = dataUrl;
+        document.getElementById('image-container').appendChild(img);
+    }
+</script>
