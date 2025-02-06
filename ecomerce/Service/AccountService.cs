@@ -18,48 +18,22 @@ namespace ecomerce.Service
                     => acc.UserName.Equals(username) && acc.Password.Equals(password));
         }
 
-        public void updateAccountDetail(Account account)
-        {
-            try
-            {
-                dbContext.Attach(account).State = EntityState.Modified;
-                dbContext.SaveChanges();
-            }
-            catch (Exception)
-            {
+public void updateAccountDetail(Account account)
+{
+    dbContext.Attach(account).State = EntityState.Modified;
+    dbContext.SaveChanges();
+}
 
-                throw;
-            }
-        }
+public bool checkAccountDuplicate(Account account)
+{
+    return dbContext.Accounts.FirstOrDefault(acc => acc.UserName.Equals(account.UserName)) != null;
+}
 
-      
-
-        public bool checkAccountDuplicate(Account account)
-        {
-            try
-            {
-                return dbContext.Accounts.FirstOrDefault(acc => acc.UserName.Equals(account.UserName)) != null;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        internal async Task registerAccountAsync(Account account)
-        {
-            try
-            {
-                account.Type = false;
-                dbContext.Accounts.Add(account);
-                await dbContext.SaveChangesAsync();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
+internal async Task registerAccountAsync(Account account)
+{
+    account.Type = false;
+    dbContext.Accounts.Add(account);
+    await dbContext.SaveChangesAsync();
+}
     }
 }
