@@ -14,7 +14,7 @@ namespace ecomerce.Pages.Account
     public class RegisterModel : PageModel
     {
         private readonly IMailKitService _mailKitService;
-        private AccountService accountService = new AccountService();
+        private readonly AccountService accountService = new AccountService();
 
         public RegisterModel(IMailKitService mailKitService)
         {
