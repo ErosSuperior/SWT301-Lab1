@@ -41,36 +41,37 @@ namespace ecomerce.Pages.Account
             capCha = string.Join(" ", validate.ToCharArray());
         }
 
-        public async Task<IActionResult> OnPostAsync()
+public async Task<IActionResult> OnPostAsync()
+{
+    if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+    {
+        setNotice("Input all the fields");
+        return Page();
+    }
+
+    try
+    {
+        var acc = await Task.Run(() => _accountService.getAccount(Username, Password));
+
+        if (acc == null)
         {
-            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
-            {
-                setNotice("Input all the fields");
-                return Page();
-            }
-
-            try
-            {
-                var acc =  _accountService.getAccount(Username, Password);
-
-                if (acc == null)
-                {
-                    setNotice("Wrong Username or Password");
-                    return Page();
-                }
-
-                var sessionStr = acc.Type ? "staff" : "customer";
-                var accJson = JsonSerializer.Serialize(acc);
-                HttpContext.Session.SetString(sessionStr, accJson);
-
-                return RedirectToPage("/Index");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred in OnPostAsync");
-                throw;
-            }
+            setNotice("Wrong Username or Password");
+            return Page();
         }
+
+        var sessionStr = acc.Type ? "staff" : "customer";
+        var accJson = JsonSerializer.Serialize(acc);
+        HttpContext.Session.SetString(sessionStr, accJson);
+
+        return RedirectToPage("/Index");
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "An error occurred in OnPostAsync");
+        throw;
+    }
+}
+
 
         public void setNotice(string notice)
         {
