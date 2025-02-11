@@ -17,7 +17,8 @@ namespace ecomerce.Pages.Account
         private readonly ILogger<LoginModel> _logger;
 
         [BindProperty]
-        public string capCha { get; set; }
+        public required string capCha { get; set; }
+
 
         [BindProperty]
         public string validate { get; set; } = "";
