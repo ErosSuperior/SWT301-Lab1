@@ -20,11 +20,11 @@ namespace ecomerce.Service
         {
             try
             {
-                Product product = dbContext.Products.FirstOrDefault(p => p.ProductId == productID);
+                Product? product = dbContext.Products.FirstOrDefault(p => p.ProductId == productID);
 
                 if (product == null)
                 {
-                    throw new Exception("Product not found.");
+                    throw new Exception($"Product with ID {productID} not found.");
                 }
 
                 Order o = new Order
@@ -54,7 +54,7 @@ namespace ecomerce.Service
         {
             try
             {
-                OrderDetail odProduct = dbContext.OrderDetails
+                OrderDetail? odProduct = dbContext.OrderDetails
                     .FirstOrDefault(od => od.Product.ProductId == productID && od.OrderId == orderID);
 
                 if (odProduct != null)
@@ -64,11 +64,11 @@ namespace ecomerce.Service
                 }
                 else
                 {
-                    Product product = dbContext.Products.FirstOrDefault(p => p.ProductId == productID);
+                    Product? product = dbContext.Products.FirstOrDefault(p => p.ProductId == productID);
 
                     if (product == null)
                     {
-                        throw new Exception("Product not found.");
+                        throw new Exception($"Product with ID {productID} not found.");
                     }
 
                     OrderDetail detail = new OrderDetail
@@ -126,7 +126,7 @@ namespace ecomerce.Service
                 return dbContext.Orders
                     .Include(od => od.Customer)
                     .FirstOrDefault(o => o.OrderId == id)
-                    ?? throw new Exception("Order not found.");
+                    ?? throw new Exception($"Order with ID {id} not found.");
             }
             catch (Exception ex)
             {
@@ -199,7 +199,7 @@ namespace ecomerce.Service
             try
             {
                 Order order = getCartOrder(cusid);
-                OrderDetail orderDetail = dbContext.OrderDetails
+                OrderDetail? orderDetail = dbContext.OrderDetails
                     .FirstOrDefault(od => od.ProductId == id && od.OrderId == order.OrderId);
 
                 if (orderDetail != null)
