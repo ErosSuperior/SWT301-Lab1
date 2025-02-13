@@ -23,10 +23,10 @@ namespace ecomerce.Pages.Account
         public string validate { get; set; } = "";
 
         [BindProperty]
-        public string Username { get; set; }
+        public required string Username { get; set; } // Added 'required' modifier
 
         [BindProperty]
-        public string Password { get; set; }
+        public required string Password { get; set; } // Added 'required' modifier
 
         public LoginModel(AccountService accountService, ILogger<LoginModel> logger)
         {
