@@ -27,15 +27,24 @@ namespace ecomerce.Pages.Admin.Products
         [BindProperty]
         public Product Product { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null || productService.getProductID(id) == null) return RedirectToPage("/404Page");
+public async Task<IActionResult> OnGetAsync(int? id)
+{
+    if (id == null)
+    {
+        return RedirectToPage("/404Page");
+    }
 
-            Product = productService.getProductID(id);
-            ViewData["CategoryId"] = categoryService.getAllCategory();
-            ViewData["SupplierId"] = supplierService.getAllSuppliers();
-            return Page();
-        }
+    var product = productService.getProductID(id);
+    if (product == null)
+    {
+        return RedirectToPage("/404Page");
+    }
+
+    Product = product;  // Safely assign product to Product
+    ViewData["CategoryId"] = categoryService.getAllCategory();
+    ViewData["SupplierId"] = supplierService.getAllSuppliers();
+    return Page();
+}
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
