@@ -19,7 +19,6 @@ namespace ecomerce.Pages.Account
         [BindProperty]
         public required string capCha { get; set; }
 
-
         [BindProperty]
         public string validate { get; set; } = "";
 
@@ -41,40 +40,49 @@ namespace ecomerce.Pages.Account
             capCha = string.Join(" ", validate.ToCharArray());
         }
 
-public async Task<IActionResult> OnPostAsync()
-{
-    if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
-    {
-        setNotice("Input all the fields");
-        return Page();
-    }
-
-    try
-    {
-        var acc = await Task.Run(() => _accountService.getAccount(Username, Password));
-
-        if (acc == null)
+        public async Task<IActionResult> OnPostAsync()
         {
-            setNotice("Wrong Username or Password");
-            return Page();
+            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+            {
+                setNotice("Input all the fields");
+                return Page();
+            }
+
+            try
+            {
+                // Attempt to get the account based on username and password
+                var acc = await Task.Run(() => _accountService.getAccount(Username, Password));
+
+                if (acc == null)
+                {
+                    setNotice("Wrong Username or Password");
+                    return Page();
+                }
+
+                // Set the session based on user type (staff or customer)
+                var sessionStr = acc.Type ? "staff" : "customer";
+                var accJson = JsonSerializer.Serialize(acc);
+                HttpContext.Session.SetString(sessionStr, accJson);
+
+                // Redirect to homepage after successful login
+                return RedirectToPage("/Index");
+            }
+            catch (Exception ex)
+            {
+                // Log the error with additional contextual information (username)
+                _logger.LogError(ex, "An error occurred during the login process for username: {Username}", Username);
+
+                // Set a user-friendly notice
+                setNotice("An error occurred while processing your login. Please try again later.");
+
+                // Optionally, rethrow the exception with additional context for debugging
+                throw new InvalidOperationException("An error occurred while attempting to log in.", ex);
+            }
         }
-
-        var sessionStr = acc.Type ? "staff" : "customer";
-        var accJson = JsonSerializer.Serialize(acc);
-        HttpContext.Session.SetString(sessionStr, accJson);
-
-        return RedirectToPage("/Index");
-    }
-    catch (Exception ex)
-    {
-        _logger.LogError(ex, "An error occurred in OnPostAsync");
-        throw;
-    }
-}
-
 
         public void setNotice(string notice)
         {
+            // Generate a new random string for the captcha
             validate = GenerateRandomString();
             capCha = string.Join(" ", validate.ToCharArray());
             ViewData["notice"] = notice;
