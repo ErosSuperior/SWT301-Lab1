@@ -11,11 +11,13 @@ namespace ecomerce.Pages.Admin.Products
     {
         private ProductService productService = new ProductService();
         public IList<Product> Products { get; set; } = default!;
-        private CategoryService categoryService = new CategoryService();
+        private readonly CategoryService categoryService = new CategoryService(); // Made readonly
         private SupplierService supplierService = new SupplierService();
         private readonly IHubContext<SignalHub> _hubContext;
+
         [BindProperty]
         public Product Product { get; set; } = default!;
+
         public IndexModel(IHubContext<SignalHub> hubContext)
         {
             _hubContext = hubContext;
@@ -27,6 +29,7 @@ namespace ecomerce.Pages.Admin.Products
             ViewData["CategoryId"] = categoryService.getAllCategory();
             ViewData["SupplierId"] = supplierService.getAllSuppliers();
         }
+
         public async Task<IActionResult> OnPostAsync()
         {
             await productService.insertProductAsync(Product);
